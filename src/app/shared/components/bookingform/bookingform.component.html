@@ -1,0 +1,104 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h2>Make a Reservation</h2>
+    <p>Please fill in the details below to book your table 🍽️</p>
+
+    <!-- Name Field -->
+    <div class="control">
+        <label for="name">Name *</label>
+        <input id="name" type="text" name="name" formControlName="name" placeholder="Enter your full name" />
+        @if(form.get('name')?.invalid && form.get('name')?.touched) {
+        <p class="control-error">Name is required.</p>
+        }
+    </div>
+
+    <!-- Email Field -->
+    <div class="control">
+        <label for="email">Email *</label>
+        <input id="email" type="email" name="email" formControlName="email" placeholder="Enter your email address" />
+        @if(form.get('email')?.invalid && form.get('email')?.touched) {
+        <p class="control-error">
+            @if(form.get('email')?.errors?.['required']) {
+            Email is required.
+            }
+            @if(form.get('email')?.errors?.['email']) {
+            Please enter a valid email address.
+            }
+        </p>
+        }
+    </div>
+
+    <!-- Number of Guests Field -->
+    <div class="control">
+        <label for="numberOfGuests">Number of Guests *</label>
+        <input id="numberOfGuests" type="number" name="numberOfGuests" formControlName="numberOfGuests" min="1" max="10"
+            placeholder="1" />
+        @if(form.get('numberOfGuests')?.invalid && form.get('numberOfGuests')?.touched) {
+        <p class="control-error">
+            @if(form.get('numberOfGuests')?.errors?.['required']) {
+            Number of guests is required.
+            }
+            @if(form.get('numberOfGuests')?.errors?.['min'] || form.get('numberOfGuests')?.errors?.['max']) {
+            Number of guests must be between 1 and 10.
+            }
+        </p>
+        }
+    </div>
+
+    <!-- Date Field -->
+    <div class="control">
+        <label for="date">Reservation Date *</label>
+        <input id="date" type="date" name="date" formControlName="date" />
+        @if(form.get('date')?.invalid && form.get('date')?.touched) {
+        <p class="control-error">
+            @if(form.get('date')?.errors?.['required']) {
+            Date is required.
+            }
+            @if(form.get('date')?.errors?.['pastDate']) {
+            Date must be today or in the future.
+            }
+        </p>
+        }
+    </div>
+
+    <!-- Special Requests Field -->
+    <div class="control">
+        <label for="specialRequests">Special Requests</label>
+        <textarea id="specialRequests" name="specialRequests" formControlName="specialRequests" rows="4"
+            placeholder="Any dietary restrictions, special occasions, or other requests..."></textarea>
+    </div>
+
+    <!-- Form Actions -->
+    <p class="form-actions">
+        <button type="button" class="button button-flat" (click)="onReset()">Reset</button>
+        <button type="submit" class="button" [disabled]="form.invalid">Make Reservation</button>
+    </p>
+
+    <!-- Booking Summary -->
+    @if(submissionSuccess && bookingSummary) {
+    <div class="booking-summary">
+        <h3>Booking Confirmation</h3>
+        <div class="summary-details">
+            <div class="summary-item">
+                <strong>Name:</strong> {{ bookingSummary.name }}
+            </div>
+            <div class="summary-item">
+                <strong>Email:</strong> {{ bookingSummary.email }}
+            </div>
+            <div class="summary-item">
+                <strong>Number of Guests:</strong> {{ bookingSummary.numberOfGuests }}
+            </div>
+            <div class="summary-item">
+                <strong>Reservation Date:</strong> {{ bookingSummary.date }}
+            </div>
+            @if(bookingSummary.specialRequests) {
+            <div class="summary-item">
+                <strong>Special Requests:</strong> {{ bookingSummary.specialRequests }}
+            </div>
+            }
+        </div>
+        <p class="success-message">
+            Thank you for your reservation! We look forward to serving you.
+        </p>
+    </div>
+    }
+</form>

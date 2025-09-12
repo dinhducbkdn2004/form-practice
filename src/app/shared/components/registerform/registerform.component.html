@@ -1,0 +1,40 @@
+<form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+    <h2>Register</h2>
+    <div class="control-margin">
+        <div class="control no-margin">
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname" name="fullname" ngModel required minlength="3" #fullname="ngModel" />
+            @if(fullname.invalid && fullname.dirty && fullname.touched){
+            <p class="control-error">Please enter a valid name (at least 3 characters).</p>
+            }
+        </div>
+        <div class="control no-margin">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" ngModel required email #email="ngModel" />
+            @if(email.invalid && email.dirty && email.touched){
+            <p class="control-error">Please enter a valid email address.</p>
+            }
+        </div>
+        <div class="control no-margin">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" ngModel required #password="ngModel" minlength="6" />
+            @if(password.invalid && password.dirty && password.touched){
+            <p class="control-error">Please enter a valid password (at least 6 characters).</p>
+            }
+        </div>
+        <div class="control no-margin">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" ngModel required
+                #confirmPassword="ngModel" />
+            @if(confirmPassword.invalid && confirmPassword.dirty && confirmPassword.touched){
+            <p class="control-error">Please confirm your password.</p>
+            }
+            @if(confirmPassword.valid && password.valid && confirmPassword.value !== password.value &&
+            confirmPassword.dirty && confirmPassword.touched){
+            <p class="control-error">Passwords do not match.</p>
+            }
+        </div>
+        <button class="button" type="submit"
+            [disabled]="!registerForm.valid || (password.value !== confirmPassword.value)">Submit</button>
+    </div>
+</form>
