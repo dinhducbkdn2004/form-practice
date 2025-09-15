@@ -1,0 +1,39 @@
+<form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
+    <h2>Activity Survey</h2>
+    <p>Which activities do you enjoy?</p>
+
+    <!-- Dynamic Checkboxes -->
+    <fieldset formArrayName="activities">
+        <legend>Select your favorite activities (*):</legend>
+
+        @for (activity of activities; track activity; let i = $index) {
+        <div class="control">
+            <input type="checkbox" [id]="'activity-' + i" [formControlName]="i" (change)="onCheckboxChange()" />
+            <label [for]="'activity-' + i">{{ activity }}</label>
+        </div>
+        }
+
+        @if(surveyForm.get('activities')?.invalid && surveyForm.get('activities')?.touched) {
+        <p class="control-error">Please select at least one activity.</p>
+        }
+
+    </fieldset>
+
+    <!-- Form Actions -->
+    <p class="form-actions">
+        <button type="button" class="button button-flat" (click)="onReset()">Reset</button>
+        <button type="submit" class="button" [disabled]="surveyForm.invalid">Submit Survey</button>
+    </p>
+
+    <!-- Survey Results -->
+    @if(submissionSuccess && selectedActivities.length > 0) {
+    <div class="survey-results">
+        <h3>Survey Results</h3>
+        <ul class="activities-list">
+            @for (activity of selectedActivities; track activity) {
+            <li>{{ activity }}</li>
+            }
+        </ul>
+    </div>
+    }
+</form>
