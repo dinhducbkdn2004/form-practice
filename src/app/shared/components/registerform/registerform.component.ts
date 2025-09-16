@@ -9,7 +9,6 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrl: './registerform.component.css'
 })
 export class RegisterformComponent {
-
   onSubmit(formData: NgForm) {
     console.log(formData.form);
     formData.form.reset();

@@ -12,7 +12,6 @@ import { atLeastOneCheckboxValidator } from '../../validators/activities.validat
 })
 export class DynamicsurveyformComponent implements OnInit {
   activities: string[] = [];
-  submissionSuccess = false;
   selectedActivities: string[] = [];
 
   surveyForm = this.fb.group({
@@ -41,10 +40,6 @@ export class DynamicsurveyformComponent implements OnInit {
     });
   }
 
-  onCheckboxChange() {
-    this.activitiesFormArray.markAsTouched();
-  }
-
   onSubmit() {
     if (this.surveyForm.invalid) {
       console.log('Form is invalid');
@@ -56,14 +51,6 @@ export class DynamicsurveyformComponent implements OnInit {
       this.activitiesFormArray.at(index).value === true
     );
 
-    this.submissionSuccess = true;
     console.log('Selected activities:', this.selectedActivities);
-  }
-
-  onReset() {
-    this.surveyForm.reset();
-    this.submissionSuccess = false;
-    this.selectedActivities = [];
-    this.createCheckboxes();
   }
 }

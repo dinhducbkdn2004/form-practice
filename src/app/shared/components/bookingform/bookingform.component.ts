@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { datePickerValidator } from '../../validators/date-picker.validator';
+import { DatePipe } from '@angular/common';
 
 interface BookingSummary {
   name: string;
@@ -13,12 +14,11 @@ interface BookingSummary {
 @Component({
   selector: 'app-bookingform',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, DatePipe],
   templateUrl: './bookingform.component.html',
   styleUrl: './bookingform.component.css'
 })
 export class BookingformComponent {
-  submissionSuccess = false;
   bookingSummary: BookingSummary | null = null;
 
   constructor(private fb: FormBuilder) {}
@@ -34,43 +34,23 @@ export class BookingformComponent {
   onSubmit() {
     if (this.form.invalid) {
       console.log('Form is invalid');
-      this.markAllFieldsAsTouched();
       return;
     }
 
-    // Create booking summary
     this.bookingSummary = {
       name: this.form.value.name!,
       email: this.form.value.email!,
       numberOfGuests: this.form.value.numberOfGuests!,
-      date: this.formatDate(this.form.value.date!),
+      date: this.form.value.date!,
       specialRequests: this.form.value.specialRequests || undefined
     };
 
-    this.submissionSuccess = true;
-    console.log('Booking submitted successfully:', this.bookingSummary);
+    console.log('Booking Summary:', this.bookingSummary);
   }
 
   onReset() {
     this.form.reset();
-    this.form.patchValue({ numberOfGuests: 1 }); // Reset to default value
-    this.submissionSuccess = false;
+    this.form.patchValue({ numberOfGuests: 1 });
     this.bookingSummary = null;
-  }
-
-  private markAllFieldsAsTouched() {
-    Object.keys(this.form.controls).forEach(key => {
-      this.form.get(key)?.markAsTouched();
-    });
-  }
-
-  private formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
   }
 }

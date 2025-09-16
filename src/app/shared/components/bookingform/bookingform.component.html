@@ -2,7 +2,6 @@
     <h2>Make a Reservation</h2>
     <p>Please fill in the details below to book your table</p>
 
-    <!-- Name Field -->
     <div class="control">
         <label for="name">Name *</label>
         <input id="name" type="text" name="name" formControlName="name" placeholder="Enter your full name" />
@@ -11,7 +10,6 @@
         }
     </div>
 
-    <!-- Email Field -->
     <div class="control">
         <label for="email">Email *</label>
         <input id="email" type="email" name="email" formControlName="email" placeholder="Enter your email address" />
@@ -27,7 +25,6 @@
         }
     </div>
 
-    <!-- Number of Guests Field -->
     <div class="control">
         <label for="numberOfGuests">Number of Guests *</label>
         <input id="numberOfGuests" type="number" name="numberOfGuests" formControlName="numberOfGuests" min="1" max="10"
@@ -44,7 +41,6 @@
         }
     </div>
 
-    <!-- Date Field -->
     <div class="control">
         <label for="date">Reservation Date *</label>
         <input id="date" type="date" name="date" formControlName="date" />
@@ -60,21 +56,18 @@
         }
     </div>
 
-    <!-- Special Requests Field -->
     <div class="control">
         <label for="specialRequests">Special Requests</label>
         <textarea id="specialRequests" name="specialRequests" formControlName="specialRequests" rows="4"
             placeholder="Any dietary restrictions, special occasions, or other requests..."></textarea>
     </div>
 
-    <!-- Form Actions -->
     <p class="form-actions">
         <button type="button" class="button button-flat" (click)="onReset()">Reset</button>
         <button type="submit" class="button" [disabled]="form.invalid">Make Reservation</button>
     </p>
 
-    <!-- Booking Summary -->
-    @if(submissionSuccess && bookingSummary) {
+    @if(bookingSummary) {
     <div class="booking-summary">
         <h3>Booking Confirmation</h3>
         <div class="summary-details">
@@ -88,7 +81,7 @@
                 <strong>Number of Guests:</strong> {{ bookingSummary.numberOfGuests }}
             </div>
             <div class="summary-item">
-                <strong>Reservation Date:</strong> {{ bookingSummary.date }}
+                <strong>Reservation Date:</strong> {{ bookingSummary.date | date:'fullDate' }}
             </div>
             @if(bookingSummary.specialRequests) {
             <div class="summary-item">
@@ -96,9 +89,6 @@
             </div>
             }
         </div>
-        <p class="success-message">
-            Thank you for your reservation! We look forward to serving you.
-        </p>
     </div>
     }
 </form>

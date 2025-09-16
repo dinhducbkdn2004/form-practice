@@ -29,8 +29,7 @@
             @if(confirmPassword.invalid && confirmPassword.dirty && confirmPassword.touched){
             <p class="control-error">Please confirm your password.</p>
             }
-            @if(confirmPassword.valid && password.valid && confirmPassword.value !== password.value &&
-            confirmPassword.dirty && confirmPassword.touched){
+            @if(confirmPassword.valid && password.valid && confirmPassword.value !== password.value && confirmPassword.dirty && confirmPassword.touched){
             <p class="control-error">Passwords do not match.</p>
             }
         </div>
