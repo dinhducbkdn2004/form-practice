@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { BookingformComponent } from './shared/components/bookingform/bookingform.component';
 import { DynamicsurveyformComponent } from "./shared/components/dynamicsurveyform/dynamicsurveyform.component";
 import { RegisterformComponent } from "./shared/components/registerform/registerform.component";
+import { SignupComponent } from "./learned/auth/signup/signup.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
-  imports: [BookingformComponent, DynamicsurveyformComponent, RegisterformComponent],
+  imports: [BookingformComponent, DynamicsurveyformComponent, RegisterformComponent, SignupComponent],
 })
 export class AppComponent {}

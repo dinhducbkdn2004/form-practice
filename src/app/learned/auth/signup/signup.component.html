@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
   <h2>Welcome on board!</h2>
-  <p>We just need a little bit of data from you to get you started 🚀</p>
+  <p>We just need a little bit of data from you to get you started</p>
 
   <div class="control">
     <label for="email">Email</label>
@@ -15,11 +15,17 @@
       <label for="password">Password</label>
       <input id="password" type="password" name="password" formControlName="password" />
     </div>
+    @if(form.get('passwords.password')?.invalid && form.get('passwords.password')?.touched){
+    <p class="control-error">Password must be at least 6 characters long.</p>
+    }
 
     <div class="control">
       <label for="confirm-password">Confirm Password</label>
       <input id="confirm-password" type="password" name="confirm-password" formControlName="confirmPassword" />
     </div>
+    @if(form.get('passwords.confirmPassword')?.invalid && form.get('passwords.confirmPassword')?.touched){
+    <p class="control-error">Passwords do not match.</p>
+    }
   </div>
 
   <hr />
